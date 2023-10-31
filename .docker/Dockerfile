@@ -10,6 +10,7 @@ RUN apt-get update && apt-get install -y \
 FROM base AS dev
 
 RUN apt-get update && apt-get install -y php${PHP_VERSION}-xdebug
+COPY .docker/php/xdebug.ini /etc/php/current_version/mods-available/xdebug.ini
 ENV XDEBUG_MODE=off
 
 FROM base AS prod

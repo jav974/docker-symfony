@@ -14,3 +14,5 @@ services:
       PGID: 1000
       SSL_MODE: mixed
       XDEBUG_MODE: "${XDEBUG_MODE:-off}"
+    extra_hosts:
+      - host.docker.internal:host-gateway
