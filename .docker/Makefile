@@ -1,6 +1,10 @@
 up:
 	docker compose up --build -d
 
+up-prod:
+	docker compose -f docker-compose.yaml build --no-cache
+	docker compose -f docker-compose.yaml up -d
+
 down:
 	docker compose down
 

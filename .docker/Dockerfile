@@ -16,20 +16,16 @@ COPY .docker/php/xdebug.ini /etc/php/current_version/mods-available/xdebug.ini
 ENV XDEBUG_MODE=off
 
 FROM base AS prod
-
-RUN set -eux; \
-    if [ -f composer.json ]; then \
-        composer install --prefer-dist --no-dev --no-autoloader --no-scripts --no-progress; \
-        composer clear-cache; \
-    fi
+ENV APP_ENV=prod
 
 COPY . .
 
 RUN set -eux; \
-    if [ -f composer.json ]; then \
-        composer dump-autoload --classmap-authoritative --no-dev; \
-        composer dump-env prod; \
-        composer run-script --no-dev post-install-cmd; \
-        chmod +x bin/console; sync; \
-    fi
+    composer install --prefer-dist --no-dev --no-autoloader --no-scripts --no-progress; \
+    composer clear-cache; \
+    composer dump-autoload --classmap-authoritative --no-dev; \
+    composer run-script --no-dev post-install-cmd; \
+    chmod +x bin/console; \
+    chown -R webuser:webgroup .; \
+    sync;
 
