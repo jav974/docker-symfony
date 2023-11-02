@@ -2,12 +2,14 @@ ARG PHP_VERSION=8.2
 ARG WEBSERVER=nginx
 
 FROM serversideup/php:${PHP_VERSION}-fpm-${WEBSERVER} AS base
+ARG PHP_VERSION
 
 RUN apt-get update && apt-get install -y \
     php${PHP_VERSION}-mysql \
     php${PHP_VERSION}-xml
 
 FROM base AS dev
+ARG PHP_VERSION
 
 RUN apt-get update && apt-get install -y php${PHP_VERSION}-xdebug
 COPY .docker/php/xdebug.ini /etc/php/current_version/mods-available/xdebug.ini
