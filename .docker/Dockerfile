@@ -6,12 +6,13 @@ ARG PHP_VERSION
 
 RUN apt-get update && apt-get install -y \
     php${PHP_VERSION}-mysql \
-    php${PHP_VERSION}-xml
+    php${PHP_VERSION}-xml \
+    && apt-get clean
 
 FROM base AS dev
 ARG PHP_VERSION
 
-RUN apt-get update && apt-get install -y php${PHP_VERSION}-xdebug
+RUN apt-get update && apt-get install -y php${PHP_VERSION}-xdebug && apt-get clean
 COPY .docker/php/xdebug.ini /etc/php/current_version/mods-available/xdebug.ini
 ENV XDEBUG_MODE=off
 
